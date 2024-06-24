@@ -466,9 +466,11 @@ The unique address we will use for an individual note is of the form <i>notes/10
 
 We can define [parameters](http://expressjs.com/en/guide/routing.html#route-parameters) for routes in Express by using the colon syntax:
 
+When you get id from request.params, it's a string, so comparing it directly to numbers in your notes array will fail. You should convert id to a number before the comparison.
+
 ```js
 app.get('/api/notes/:id', (request, response) => {
-  const id = request.params.id
+  const id = Number(request.params.id)
   const note = notes.find(note => note.id === id)
   response.json(note)
 })
